@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TaskFlow - To-Do App</title>
+    <title>TaskFlow | To-Do App</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- Background -->
     <div class="background">
-        <div class="glow glow-one"></div>
-        <div class="glow glow-two"></div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
     </div>
 
 
+    <!-- Main Application -->
     <main class="app">
 
-        <!-- HEADER -->
-
+        <!-- Header -->
         <header class="header">
 
             <div>
@@ -31,76 +31,76 @@
                     Task<span>Flow</span>
                 </h1>
 
-                <p class="subtitle">
-                    Organize your day. Get things done.
+                <p class="tagline">
+                    Plan it. Track it. Complete it.
                 </p>
             </div>
 
-            <div class="date-box">
-                <span id="currentDay">TODAY</span>
-                <strong id="currentDate">--</strong>
+            <div class="today">
+                <span id="dayName">TODAY</span>
+                <strong id="dateDisplay">--</strong>
             </div>
 
         </header>
 
 
-        <!-- STATS -->
-
+        <!-- Statistics -->
         <section class="stats">
 
-            <div class="stat-card">
-                <span>TOTAL</span>
-                <strong id="totalTasks">0</strong>
+            <div class="stat">
+                <span>TOTAL TASKS</span>
+                <strong id="totalCount">0</strong>
             </div>
 
-            <div class="stat-card">
+            <div class="stat">
                 <span>ACTIVE</span>
-                <strong id="activeTasks">0</strong>
+                <strong id="activeCount">0</strong>
             </div>
 
-            <div class="stat-card">
+            <div class="stat">
                 <span>COMPLETED</span>
-                <strong id="completedTasks">0</strong>
+                <strong id="completedCount">0</strong>
             </div>
 
         </section>
 
 
-        <!-- ADD TASK -->
+        <!-- Add Task -->
+        <section class="card add-section">
 
-        <section class="add-card">
+            <div class="title-row">
+                <div class="number">01</div>
 
-            <div class="section-title">
-                <span>01</span>
-                <h2>Add New Task</h2>
+                <div>
+                    <h2>Add a Task</h2>
+                    <p>Create a task and organize your day.</p>
+                </div>
             </div>
 
 
             <form id="taskForm">
 
-                <div class="input-row">
+                <div class="main-input">
 
                     <input
                         type="text"
                         id="taskInput"
-                        placeholder="What needs to be done?"
+                        placeholder="What do you need to do?"
+                        autocomplete="off"
                         maxlength="100"
                         required
                     >
 
-                    <button
-                        type="submit"
-                        class="add-btn"
-                    >
-                        + ADD TASK
+                    <button type="submit">
+                        ADD TASK
                     </button>
 
                 </div>
 
 
-                <div class="task-options">
+                <div class="options">
 
-                    <div class="option">
+                    <div class="field">
 
                         <label for="taskDate">
                             DATE
@@ -114,7 +114,7 @@
                     </div>
 
 
-                    <div class="option">
+                    <div class="field">
 
                         <label for="taskTime">
                             TIME
@@ -128,7 +128,7 @@
                     </div>
 
 
-                    <div class="option">
+                    <div class="field">
 
                         <label for="taskPriority">
                             PRIORITY
@@ -159,21 +159,20 @@
         </section>
 
 
-        <!-- TASK LIST -->
+        <!-- Tasks -->
+        <section class="card task-section">
 
-        <section class="tasks-card">
+            <div class="task-header">
 
-            <div class="tasks-header">
+                <div class="title-row">
+                    <div class="number">02</div>
 
-                <div>
-                    <div class="section-title">
-                        <span>02</span>
+                    <div>
                         <h2>My Tasks</h2>
+                        <p id="taskSummary">
+                            Your tasks will appear here.
+                        </p>
                     </div>
-
-                    <p id="taskMessage">
-                        Your tasks will appear here.
-                    </p>
                 </div>
 
 
@@ -205,15 +204,9 @@
             </div>
 
 
-            <div
-                class="task-list"
-                id="taskList"
-            >
+            <div id="taskList" class="task-list">
 
-                <div
-                    class="empty-state"
-                    id="emptyState"
-                >
+                <div id="emptyState" class="empty">
 
                     <div class="empty-icon">
                         ✓
@@ -224,7 +217,7 @@
                     </h3>
 
                     <p>
-                        Add your first task and start organizing your day.
+                        Add your first task above.
                     </p>
 
                 </div>
@@ -234,13 +227,10 @@
         </section>
 
 
-        <!-- FOOTER -->
-
+        <!-- Footer -->
         <footer>
 
-            <span>
-                TASKFLOW
-            </span>
+            <span>TaskFlow</span>
 
             <span>
                 HTML • CSS • JAVASCRIPT
@@ -251,22 +241,18 @@
     </main>
 
 
-    <!-- EDIT MODAL -->
-
-    <div
-        class="modal"
-        id="editModal"
-    >
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
 
         <div class="modal-box">
 
-            <div class="modal-header">
+            <div class="modal-title">
 
                 <h2>Edit Task</h2>
 
                 <button
                     id="closeModal"
-                    class="close-btn"
+                    class="close"
                 >
                     ×
                 </button>
@@ -274,18 +260,23 @@
             </div>
 
 
+            <label>
+                TASK
+            </label>
+
             <input
                 type="text"
-                id="editInput"
-                placeholder="Task name"
+                id="editTaskInput"
             >
 
 
-            <div class="edit-options">
+            <div class="edit-grid">
 
                 <div>
 
-                    <label>DATE</label>
+                    <label>
+                        DATE
+                    </label>
 
                     <input
                         type="date"
@@ -297,7 +288,9 @@
 
                 <div>
 
-                    <label>TIME</label>
+                    <label>
+                        TIME
+                    </label>
 
                     <input
                         type="time"
@@ -309,7 +302,9 @@
 
                 <div>
 
-                    <label>PRIORITY</label>
+                    <label>
+                        PRIORITY
+                    </label>
 
                     <select id="editPriority">
 
@@ -347,5 +342,4 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>
