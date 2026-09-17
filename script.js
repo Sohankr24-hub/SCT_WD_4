@@ -1,10 +1,12 @@
 /* ==========================================
-   TASKFLOW - TO-DO WEB APPLICATION
-   SCT_WD_4
+   TASKFLOW
+   TO-DO WEB APPLICATION
    ========================================== */
 
 
-/* ================= ELEMENTS ================= */
+/* =========================
+   ELEMENTS
+========================= */
 
 const taskForm =
     document.getElementById("taskForm");
@@ -27,35 +29,37 @@ const taskList =
 const emptyState =
     document.getElementById("emptyState");
 
-const totalTasks =
-    document.getElementById("totalTasks");
+const totalCount =
+    document.getElementById("totalCount");
 
-const activeTasks =
-    document.getElementById("activeTasks");
+const activeCount =
+    document.getElementById("activeCount");
 
-const completedTasks =
-    document.getElementById("completedTasks");
+const completedCount =
+    document.getElementById("completedCount");
 
-const taskMessage =
-    document.getElementById("taskMessage");
+const taskSummary =
+    document.getElementById("taskSummary");
 
 const filters =
     document.querySelectorAll(".filter");
 
-const currentDay =
-    document.getElementById("currentDay");
+const dayName =
+    document.getElementById("dayName");
 
-const currentDate =
-    document.getElementById("currentDate");
+const dateDisplay =
+    document.getElementById("dateDisplay");
 
 
-/* ================= EDIT MODAL ================= */
+/* =========================
+   EDIT MODAL
+========================= */
 
 const editModal =
     document.getElementById("editModal");
 
-const editInput =
-    document.getElementById("editInput");
+const editTaskInput =
+    document.getElementById("editTaskInput");
 
 const editDate =
     document.getElementById("editDate");
@@ -73,63 +77,91 @@ const closeModal =
     document.getElementById("closeModal");
 
 
-/* ================= VARIABLES ================= */
+/* =========================
+   VARIABLES
+========================= */
 
-let tasks =
-    JSON.parse(
-        localStorage.getItem("taskflowTasks")
-    ) || [];
-
+let tasks = [];
 
 let currentFilter = "all";
 
 let editingTaskId = null;
 
 
-/* ================= CURRENT DATE ================= */
+/* =========================
+   LOAD SAVED TASKS
+========================= */
 
-function updateDate() {
+try {
 
-    const now = new Date();
+    tasks =
+        JSON.parse(
+            localStorage.getItem(
+                "taskflow_tasks"
+            )
+        ) || [];
 
-    currentDay.textContent =
-        now.toLocaleDateString(
-            "en-US",
-            {
-                weekday: "long"
-            }
-        ).toUpperCase();
+} catch (error) {
 
-
-    currentDate.textContent =
-        now.toLocaleDateString(
-            "en-US",
-            {
-                day: "numeric",
-                month: "short",
-                year: "numeric"
-            }
-        );
+    tasks = [];
 
 }
 
 
-updateDate();
-
-
-/* ================= SAVE ================= */
+/* =========================
+   SAVE TASKS
+========================= */
 
 function saveTasks() {
 
     localStorage.setItem(
-        "taskflowTasks",
+        "taskflow_tasks",
         JSON.stringify(tasks)
     );
 
 }
 
 
-/* ================= ADD TASK ================= */
+/* =========================
+   DISPLAY DATE
+========================= */
+
+function showDate() {
+
+    const today = new Date();
+
+
+    dayName.textContent =
+        today
+            .toLocaleDateString(
+                "en-US",
+                {
+                    weekday: "long"
+                }
+            )
+            .toUpperCase();
+
+
+    dateDisplay.textContent =
+        today
+            .toLocaleDateString(
+                "en-US",
+                {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+}
+
+
+showDate();
+
+
+/* =========================
+   ADD TASK
+========================= */
 
 taskForm.addEventListener(
     "submit",
@@ -142,7 +174,11 @@ taskForm.addEventListener(
             taskInput.value.trim();
 
 
-        if (!title) return;
+        if (title === "") {
+
+            return;
+
+        }
 
 
         const task = {
@@ -157,9 +193,7 @@ taskForm.addEventListener(
 
             priority: taskPriority.value,
 
-            completed: false,
-
-            createdAt: new Date().toISOString()
+            completed: false
 
         };
 
@@ -172,72 +206,98 @@ taskForm.addEventListener(
         renderTasks();
 
 
-        taskForm.reset();
+        taskInput.value = "";
+
+        taskDate.value = "";
+
+        taskTime.value = "";
 
         taskPriority.value = "medium";
+
+
+        taskInput.focus();
 
     }
 );
 
 
-/* ================= RENDER TASKS ================= */
+/* =========================
+   RENDER TASKS
+========================= */
 
 function renderTasks() {
 
     taskList.innerHTML = "";
 
 
-    let filteredTasks =
-        tasks.filter(task => {
-
-            if (currentFilter === "active") {
-
-                return !task.completed;
-
-            }
+    let visibleTasks;
 
 
-            if (currentFilter === "completed") {
+    if (currentFilter === "active") {
 
-                return task.completed;
+        visibleTasks =
+            tasks.filter(
+                task => !task.completed
+            );
 
-            }
+    }
 
+    else if (
+        currentFilter === "completed"
+    ) {
 
-            return true;
+        visibleTasks =
+            tasks.filter(
+                task => task.completed
+            );
 
-        });
+    }
 
+    else {
 
-    if (filteredTasks.length === 0) {
-
-        taskList.appendChild(emptyState);
-
-        emptyState.style.display = "block";
-
-    } else {
-
-        emptyState.style.display = "none";
-
-
-        filteredTasks.forEach(task => {
-
-            const item =
-                createTaskElement(task);
-
-            taskList.appendChild(item);
-
-        });
+        visibleTasks = [...tasks];
 
     }
 
 
-    updateStats();
+    if (visibleTasks.length === 0) {
+
+        taskList.appendChild(
+            emptyState
+        );
+
+        emptyState.style.display =
+            "block";
+
+    }
+
+    else {
+
+        emptyState.style.display =
+            "none";
+
+
+        visibleTasks.forEach(
+            task => {
+
+                taskList.appendChild(
+                    createTaskElement(task)
+                );
+
+            }
+        );
+
+    }
+
+
+    updateStatistics();
 
 }
 
 
-/* ================= CREATE TASK ================= */
+/* =========================
+   CREATE TASK ELEMENT
+========================= */
 
 function createTaskElement(task) {
 
@@ -251,12 +311,15 @@ function createTaskElement(task) {
 
     if (task.completed) {
 
-        item.classList.add("completed");
+        item.classList.add(
+            "completed"
+        );
 
     }
 
 
     let dateText = "";
+
 
     if (task.date) {
 
@@ -271,30 +334,35 @@ function createTaskElement(task) {
                 "en-US",
                 {
                     day: "numeric",
-                    month: "short"
+                    month: "short",
+                    year: "numeric"
                 }
             );
 
     }
 
 
-    let timeText =
-        task.time
-            ? task.time
-            : "";
+    let dateTime = "";
 
 
-    let dateTimeText = "";
+    if (dateText && task.time) {
 
-    if (dateText && timeText) {
+        dateTime =
+            `◷ ${dateText} • ${task.time}`;
 
-        dateTimeText =
-            `${dateText} • ${timeText}`;
+    }
 
-    } else {
+    else if (dateText) {
 
-        dateTimeText =
-            dateText || timeText;
+        dateTime =
+            `◷ ${dateText}`;
+
+    }
+
+    else if (task.time) {
+
+        dateTime =
+            `◷ ${task.time}`;
 
     }
 
@@ -302,8 +370,8 @@ function createTaskElement(task) {
     item.innerHTML = `
 
         <button
-            class="check-btn"
-            title="Mark complete"
+            class="check"
+            title="Complete task"
         >
             ✓
         </button>
@@ -316,12 +384,12 @@ function createTaskElement(task) {
             </h3>
 
 
-            <div class="task-meta">
+            <div class="meta">
 
                 ${
-                    dateTimeText
-                        ? `<span>◷ ${dateTimeText}</span>`
-                        : ""
+                    dateTime
+                    ? `<span>${dateTime}</span>`
+                    : ""
                 }
 
 
@@ -336,19 +404,19 @@ function createTaskElement(task) {
         </div>
 
 
-        <div class="task-actions">
+        <div class="actions">
 
             <button
-                class="action-btn edit-btn"
-                title="Edit task"
+                class="action edit"
+                title="Edit"
             >
                 ✎
             </button>
 
 
             <button
-                class="action-btn delete-btn"
-                title="Delete task"
+                class="action delete"
+                title="Delete"
             >
                 ×
             </button>
@@ -361,30 +429,42 @@ function createTaskElement(task) {
     /* Complete */
 
     item
-        .querySelector(".check-btn")
+        .querySelector(".check")
         .addEventListener(
             "click",
-            () => toggleTask(task.id)
+            () => {
+
+                toggleTask(task.id);
+
+            }
         );
 
 
     /* Edit */
 
     item
-        .querySelector(".edit-btn")
+        .querySelector(".edit")
         .addEventListener(
             "click",
-            () => openEditModal(task.id)
+            () => {
+
+                openEdit(task.id);
+
+            }
         );
 
 
     /* Delete */
 
     item
-        .querySelector(".delete-btn")
+        .querySelector(".delete")
         .addEventListener(
             "click",
-            () => deleteTask(task.id)
+            () => {
+
+                deleteTask(task.id);
+
+            }
         );
 
 
@@ -393,7 +473,9 @@ function createTaskElement(task) {
 }
 
 
-/* ================= COMPLETE ================= */
+/* =========================
+   COMPLETE TASK
+========================= */
 
 function toggleTask(id) {
 
@@ -403,11 +485,16 @@ function toggleTask(id) {
             if (task.id === id) {
 
                 return {
+
                     ...task,
-                    completed: !task.completed
+
+                    completed:
+                        !task.completed
+
                 };
 
             }
+
 
             return task;
 
@@ -421,7 +508,9 @@ function toggleTask(id) {
 }
 
 
-/* ================= DELETE ================= */
+/* =========================
+   DELETE TASK
+========================= */
 
 function deleteTask(id) {
 
@@ -438,9 +527,11 @@ function deleteTask(id) {
 }
 
 
-/* ================= EDIT ================= */
+/* =========================
+   OPEN EDIT
+========================= */
 
-function openEditModal(id) {
+function openEdit(id) {
 
     const task =
         tasks.find(
@@ -454,7 +545,7 @@ function openEditModal(id) {
     editingTaskId = id;
 
 
-    editInput.value =
+    editTaskInput.value =
         task.title;
 
     editDate.value =
@@ -467,41 +558,41 @@ function openEditModal(id) {
         task.priority;
 
 
-    editModal.classList.add("show");
+    editModal.classList.add(
+        "show"
+    );
+
+
+    editTaskInput.focus();
 
 }
 
 
-closeModal.addEventListener(
-    "click",
-    () => {
-
-        editModal.classList.remove(
-            "show"
-        );
-
-    }
-);
-
-
-/* ================= SAVE EDIT ================= */
+/* =========================
+   SAVE EDIT
+========================= */
 
 saveEdit.addEventListener(
     "click",
-    () => {
+    function() {
 
         const title =
-            editInput.value.trim();
+            editTaskInput.value.trim();
 
 
-        if (!title) return;
+        if (title === "") {
+
+            return;
+
+        }
 
 
         tasks =
             tasks.map(task => {
 
                 if (
-                    task.id === editingTaskId
+                    task.id ===
+                    editingTaskId
                 ) {
 
                     return {
@@ -533,71 +624,98 @@ saveEdit.addEventListener(
 
         renderTasks();
 
-        editModal.classList.remove(
-            "show"
+        closeEdit();
+
+    }
+);
+
+
+/* =========================
+   CLOSE EDIT
+========================= */
+
+function closeEdit() {
+
+    editModal.classList.remove(
+        "show"
+    );
+
+    editingTaskId = null;
+
+}
+
+
+closeModal.addEventListener(
+    "click",
+    closeEdit
+);
+
+
+/* =========================
+   CLICK OUTSIDE MODAL
+========================= */
+
+editModal.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target === editModal
+        ) {
+
+            closeEdit();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   FILTERS
+========================= */
+
+filters.forEach(
+    filter => {
+
+        filter.addEventListener(
+            "click",
+            function() {
+
+                filters.forEach(
+                    button => {
+
+                        button.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                filter.classList.add(
+                    "active"
+                );
+
+
+                currentFilter =
+                    filter.dataset.filter;
+
+
+                renderTasks();
+
+            }
         );
 
     }
 );
 
 
-/* ================= CLOSE MODAL OUTSIDE ================= */
+/* =========================
+   STATISTICS
+========================= */
 
-editModal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target === editModal
-        ) {
-
-            editModal.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-);
-
-
-/* ================= FILTERS ================= */
-
-filters.forEach(filter => {
-
-    filter.addEventListener(
-        "click",
-        () => {
-
-            filters.forEach(button => {
-
-                button.classList.remove(
-                    "active"
-                );
-
-            });
-
-
-            filter.classList.add(
-                "active"
-            );
-
-
-            currentFilter =
-                filter.dataset.filter;
-
-
-            renderTasks();
-
-        }
-    );
-
-});
-
-
-/* ================= STATISTICS ================= */
-
-function updateStats() {
+function updateStatistics() {
 
     const total =
         tasks.length;
@@ -613,58 +731,82 @@ function updateStats() {
         total - completed;
 
 
-    totalTasks.textContent =
+    totalCount.textContent =
         total;
 
-    activeTasks.textContent =
+    activeCount.textContent =
         active;
 
-    completedTasks.textContent =
+    completedCount.textContent =
         completed;
 
 
     if (total === 0) {
 
-        taskMessage.textContent =
+        taskSummary.textContent =
             "Your tasks will appear here.";
 
-    } else {
+    }
 
-        taskMessage.textContent =
-            `${active} active task${active !== 1 ? "s" : ""} remaining.`;
+    else if (active === 0) {
+
+        taskSummary.textContent =
+            "All tasks completed!";
+
+    }
+
+    else {
+
+        taskSummary.textContent =
+            `${active} active task${active === 1 ? "" : "s"} remaining.`;
 
     }
 
 }
 
 
-/* ================= ESCAPE HTML ================= */
+/* =========================
+   ESCAPE HTML
+========================= */
 
 function escapeHTML(text) {
 
-    const div =
+    const element =
         document.createElement("div");
 
-    div.textContent = text;
 
-    return div.innerHTML;
+    element.textContent = text;
+
+
+    return element.innerHTML;
 
 }
 
 
-/* ================= KEYBOARD ================= */
+/* =========================
+   KEYBOARD
+========================= */
 
 document.addEventListener(
     "keydown",
-    event => {
+    function(event) {
 
         if (
             event.key === "Escape"
         ) {
 
-            editModal.classList.remove(
-                "show"
-            );
+            closeEdit();
+
+        }
+
+
+        if (
+            event.key === "Enter" &&
+            document.activeElement ===
+            editTaskInput
+        ) {
+
+            saveEdit.click();
 
         }
 
@@ -672,6 +814,8 @@ document.addEventListener(
 );
 
 
-/* ================= INITIAL RENDER ================= */
+/* =========================
+   INITIALIZE
+========================= */
 
 renderTasks();
