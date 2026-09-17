@@ -3,7 +3,9 @@
 );
 
 
-/* ================= RESET ================= */
+/* =========================
+   RESET
+========================= */
 
 * {
     margin: 0;
@@ -12,124 +14,124 @@
 }
 
 
-body {
+html {
+    scroll-behavior: smooth;
+}
 
+
+body {
     min-height: 100vh;
 
     font-family: "Inter", sans-serif;
 
     background: #090a0f;
 
-    color: white;
+    color: #ffffff;
 
     padding: 40px 0;
-
 }
 
 
-/* ================= VARIABLES ================= */
+/* =========================
+   VARIABLES
+========================= */
 
 :root {
 
     --background: #090a0f;
 
-    --card: rgba(18, 20, 28, 0.9);
+    --card: rgba(18, 20, 28, 0.92);
 
     --border: rgba(255,255,255,0.08);
 
+    --text: #ffffff;
+
     --muted: #858894;
 
-    --red: #ff315a;
+    --accent: #ff315a;
 
-    --red-dark: #ff1744;
+    --accent-dark: #ff1744;
 
-    --green: #39d98a;
+    --green: #3ee58f;
 
     --yellow: #ffc857;
 
 }
 
 
-/* ================= BACKGROUND ================= */
+/* =========================
+   BACKGROUND
+========================= */
 
 .background {
-
     position: fixed;
 
     inset: 0;
 
-    overflow: hidden;
-
     z-index: -1;
+
+    overflow: hidden;
 
     background:
 
         radial-gradient(
-            circle at 15% 15%,
-            rgba(255,49,90,0.12),
+            circle at 15% 10%,
+            rgba(255,49,90,0.13),
             transparent 30%
         ),
 
         radial-gradient(
-            circle at 85% 85%,
-            rgba(66,100,255,0.08),
+            circle at 90% 90%,
+            rgba(72,93,255,0.09),
             transparent 30%
         );
-
 }
 
 
 .glow {
-
     position: absolute;
 
     width: 300px;
-
     height: 300px;
 
     border-radius: 50%;
 
     filter: blur(130px);
 
-    opacity: 0.2;
-
+    opacity: 0.25;
 }
 
 
-.glow-one {
-
-    background: var(--red);
+.glow-1 {
+    background: var(--accent);
 
     top: -150px;
-
     left: -100px;
-
 }
 
 
-.glow-two {
-
-    background: #394cff;
+.glow-2 {
+    background: #4055ff;
 
     bottom: -150px;
-
     right: -100px;
-
 }
 
 
-/* ================= APP ================= */
+/* =========================
+   APP
+========================= */
 
 .app {
-
     width: min(900px, 92%);
 
     margin: auto;
-
 }
 
 
-/* ================= HEADER ================= */
+/* =========================
+   HEADER
+========================= */
 
 .header {
 
@@ -140,13 +142,12 @@ body {
     align-items: flex-end;
 
     margin-bottom: 30px;
-
 }
 
 
 .eyebrow {
 
-    color: var(--red);
+    color: var(--accent);
 
     font-size: 9px;
 
@@ -155,83 +156,80 @@ body {
     letter-spacing: 3px;
 
     margin-bottom: 8px;
-
 }
 
 
 .header h1 {
 
-    font-size: 45px;
+    font-size: 48px;
+
+    line-height: 1;
 
     font-weight: 900;
 
     letter-spacing: -2px;
-
 }
 
 
 .header h1 span {
 
-    color: var(--red);
-
+    color: var(--accent);
 }
 
 
-.subtitle {
+.tagline {
 
     color: var(--muted);
 
     font-size: 13px;
 
-    margin-top: 7px;
-
+    margin-top: 9px;
 }
 
 
-.date-box {
+.today {
 
     text-align: right;
 
-    padding: 12px 18px;
-
-    border: 1px solid var(--border);
+    padding: 13px 18px;
 
     background: var(--card);
 
-    border-radius: 12px;
+    border: 1px solid var(--border);
 
+    border-radius: 12px;
 }
 
 
-.date-box span {
+.today span {
 
     display: block;
 
-    color: var(--red);
+    color: var(--accent);
 
     font-size: 8px;
 
     font-weight: 800;
 
     letter-spacing: 2px;
-
 }
 
 
-.date-box strong {
+.today strong {
 
     display: block;
 
     margin-top: 5px;
 
+    color: #ddd;
+
     font-size: 12px;
-
-    color: #ccc;
-
 }
 
 
-/* ================= STATS ================= */
+/* =========================
+   STATS
+========================= */
 
 .stats {
 
@@ -243,24 +241,22 @@ body {
     gap: 12px;
 
     margin-bottom: 18px;
-
 }
 
 
-.stat-card {
+.stat {
+
+    padding: 18px 20px;
 
     background: var(--card);
 
     border: 1px solid var(--border);
 
     border-radius: 14px;
-
-    padding: 18px 20px;
-
 }
 
 
-.stat-card span {
+.stat span {
 
     color: var(--muted);
 
@@ -269,25 +265,24 @@ body {
     font-weight: 800;
 
     letter-spacing: 2px;
-
 }
 
 
-.stat-card strong {
+.stat strong {
 
     display: block;
 
     margin-top: 5px;
 
-    font-size: 25px;
-
+    font-size: 26px;
 }
 
 
-/* ================= CARDS ================= */
+/* =========================
+   CARDS
+========================= */
 
-.add-card,
-.tasks-card {
+.card {
 
     background: var(--card);
 
@@ -298,60 +293,70 @@ body {
     padding: 28px;
 
     backdrop-filter: blur(20px);
-
 }
 
 
-.tasks-card {
+.task-section {
 
     margin-top: 18px;
-
 }
 
 
-/* ================= SECTION TITLE ================= */
+/* =========================
+   SECTION TITLE
+========================= */
 
-.section-title {
+.title-row {
 
     display: flex;
 
-    align-items: center;
+    align-items: flex-start;
 
-    gap: 10px;
-
-    margin-bottom: 20px;
-
+    gap: 12px;
 }
 
 
-.section-title span {
+.number {
 
-    color: var(--red);
+    color: var(--accent);
 
     font-size: 9px;
 
-    font-weight: 800;
+    font-weight: 900;
 
     letter-spacing: 1px;
 
+    padding-top: 3px;
 }
 
 
-.section-title h2 {
+.title-row h2 {
 
     font-size: 19px;
-
 }
 
 
-/* ================= INPUT ================= */
+.title-row p {
 
-.input-row {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================
+   ADD TASK
+========================= */
+
+.main-input {
 
     display: flex;
 
     gap: 10px;
 
+    margin-top: 25px;
 }
 
 
@@ -361,46 +366,46 @@ body {
 
     min-width: 0;
 
-    padding: 16px;
+    padding: 15px;
 
-    background: rgba(255,255,255,0.04);
+    border-radius: 9px;
 
     border: 1px solid var(--border);
 
-    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
 
     color: white;
 
     outline: none;
 
-    font-size: 13px;
+    font-family: inherit;
 
+    font-size: 13px;
 }
 
 
 #taskInput:focus {
 
-    border-color: rgba(255,49,90,0.5);
-
+    border-color:
+        rgba(255,49,90,0.55);
 }
 
 
 #taskInput::placeholder {
 
-    color: #5f616b;
-
+    color: #5d5f68;
 }
 
 
-.add-btn {
+.main-input button {
 
     border: none;
 
-    border-radius: 10px;
+    border-radius: 9px;
 
-    padding: 0 22px;
+    padding: 0 23px;
 
-    background: var(--red);
+    background: var(--accent);
 
     color: white;
 
@@ -412,23 +417,23 @@ body {
 
     cursor: pointer;
 
-    transition: 0.25s;
-
+    transition: 0.2s;
 }
 
 
-.add-btn:hover {
+.main-input button:hover {
 
-    background: var(--red-dark);
+    background: var(--accent-dark);
 
     transform: translateY(-2px);
-
 }
 
 
-/* ================= OPTIONS ================= */
+/* =========================
+   OPTIONS
+========================= */
 
-.task-options {
+.options {
 
     display: grid;
 
@@ -438,12 +443,12 @@ body {
     gap: 10px;
 
     margin-top: 12px;
-
 }
 
 
-.option label,
-.edit-options label {
+.field label,
+.edit-grid label,
+.modal-box > label {
 
     display: block;
 
@@ -456,24 +461,23 @@ body {
     letter-spacing: 1px;
 
     margin-bottom: 6px;
-
 }
 
 
-.option input,
-.option select,
-.edit-options input,
-.edit-options select {
+.field input,
+.field select,
+.edit-grid input,
+.edit-grid select {
 
     width: 100%;
 
     padding: 11px;
 
-    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
 
     border: 1px solid var(--border);
 
-    border-radius: 8px;
+    background: rgba(255,255,255,0.04);
 
     color: white;
 
@@ -482,21 +486,21 @@ body {
     font-family: inherit;
 
     font-size: 11px;
-
 }
 
 
-.option select option,
-.edit-options select option {
+select option {
 
     background: #15161d;
 
 }
 
 
-/* ================= TASK HEADER ================= */
+/* =========================
+   TASK HEADER
+========================= */
 
-.tasks-header {
+.task-header {
 
     display: flex;
 
@@ -504,28 +508,9 @@ body {
 
     align-items: flex-end;
 
-    gap: 20px;
+    padding-bottom: 18px;
 
     border-bottom: 1px solid var(--border);
-
-}
-
-
-.tasks-header .section-title {
-
-    margin-bottom: 5px;
-
-}
-
-
-.tasks-header > div > p {
-
-    color: var(--muted);
-
-    font-size: 10px;
-
-    margin-bottom: 20px;
-
 }
 
 
@@ -534,50 +519,46 @@ body {
     display: flex;
 
     gap: 5px;
-
-    margin-bottom: 15px;
-
 }
 
 
 .filter {
 
-    background: transparent;
+    padding: 7px 12px;
+
+    border-radius: 7px;
 
     border: 1px solid var(--border);
 
+    background: transparent;
+
     color: var(--muted);
-
-    padding: 7px 11px;
-
-    border-radius: 7px;
 
     font-size: 8px;
 
     font-weight: 800;
 
     cursor: pointer;
-
 }
 
 
 .filter.active {
 
-    background: var(--red);
-
-    border-color: var(--red);
-
     color: white;
 
+    background: var(--accent);
+
+    border-color: var(--accent);
 }
 
 
-/* ================= TASK LIST ================= */
+/* =========================
+   TASK LIST
+========================= */
 
 .task-list {
 
-    padding-top: 8px;
-
+    margin-top: 5px;
 }
 
 
@@ -585,28 +566,29 @@ body {
 
     display: grid;
 
-    grid-template-columns: 35px 1fr auto;
+    grid-template-columns:
+        30px 1fr auto;
 
     align-items: center;
 
     gap: 12px;
 
-    padding: 16px 5px;
+    padding: 16px 3px;
 
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid
+        rgba(255,255,255,0.05);
 
-    animation: slideIn 0.25s ease;
-
+    animation: taskIn 0.25s ease;
 }
 
 
-@keyframes slideIn {
+@keyframes taskIn {
 
     from {
 
         opacity: 0;
 
-        transform: translateY(-7px);
+        transform: translateY(-6px);
 
     }
 
@@ -621,9 +603,11 @@ body {
 }
 
 
-/* ================= CHECKBOX ================= */
+/* =========================
+   CHECK BUTTON
+========================= */
 
-.check-btn {
+.check {
 
     width: 22px;
 
@@ -631,7 +615,7 @@ body {
 
     border-radius: 7px;
 
-    border: 1px solid #555864;
+    border: 1px solid #555862;
 
     background: transparent;
 
@@ -641,25 +625,35 @@ body {
 
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
+
+    justify-content: center;
 
     font-weight: 900;
 
+    transition: 0.2s;
 }
 
 
-.task-item.completed .check-btn {
+.check:hover {
+
+    border-color: var(--accent);
+}
+
+
+.task-item.completed .check {
 
     background: var(--green);
 
     border-color: var(--green);
 
     color: #07120d;
-
 }
 
+
+/* =========================
+   TASK INFORMATION
+========================= */
 
 .task-info h3 {
 
@@ -669,19 +663,19 @@ body {
 
     color: #eee;
 
+    word-break: break-word;
 }
 
 
-.task-item.completed .task-info h3 {
+.task-item.completed h3 {
+
+    color: #666872;
 
     text-decoration: line-through;
-
-    color: #656771;
-
 }
 
 
-.task-meta {
+.meta {
 
     display: flex;
 
@@ -689,17 +683,15 @@ body {
 
     gap: 8px;
 
-    margin-top: 6px;
-
+    margin-top: 7px;
 }
 
 
-.task-meta span {
+.meta span {
 
     color: var(--muted);
 
     font-size: 8px;
-
 }
 
 
@@ -714,16 +706,15 @@ body {
     font-weight: 800;
 
     letter-spacing: 0.5px;
-
 }
 
 
 .priority.high {
 
-    color: #ff718c;
+    color: #ff6f8a;
 
-    background: rgba(255,49,90,0.1);
-
+    background:
+        rgba(255,49,90,0.1);
 }
 
 
@@ -731,8 +722,8 @@ body {
 
     color: var(--yellow);
 
-    background: rgba(255,200,87,0.1);
-
+    background:
+        rgba(255,200,87,0.1);
 }
 
 
@@ -740,23 +731,24 @@ body {
 
     color: var(--green);
 
-    background: rgba(57,217,138,0.1);
-
+    background:
+        rgba(62,229,143,0.1);
 }
 
 
-/* ================= TASK ACTIONS ================= */
+/* =========================
+   ACTIONS
+========================= */
 
-.task-actions {
+.actions {
 
     display: flex;
 
     gap: 6px;
-
 }
 
 
-.action-btn {
+.action {
 
     width: 32px;
 
@@ -773,36 +765,35 @@ body {
     cursor: pointer;
 
     transition: 0.2s;
-
 }
 
 
-.action-btn:hover {
+.action:hover {
 
     color: white;
 
     background: rgba(255,255,255,0.08);
-
 }
 
 
-.delete-btn:hover {
+.action.delete:hover {
 
-    color: var(--red);
+    color: var(--accent);
 
-    border-color: rgba(255,49,90,0.3);
-
+    border-color:
+        rgba(255,49,90,0.4);
 }
 
 
-/* ================= EMPTY ================= */
+/* =========================
+   EMPTY STATE
+========================= */
 
-.empty-state {
+.empty {
 
     text-align: center;
 
     padding: 55px 20px;
-
 }
 
 
@@ -824,40 +815,41 @@ body {
 
     border: 1px solid var(--border);
 
-    color: var(--red);
+    color: var(--accent);
 
     font-size: 20px;
-
 }
 
 
-.empty-state h3 {
+.empty h3 {
 
     margin-top: 15px;
 
     font-size: 14px;
-
 }
 
 
-.empty-state p {
-
-    margin-top: 7px;
+.empty p {
 
     color: var(--muted);
 
     font-size: 10px;
 
+    margin-top: 6px;
 }
 
 
-/* ================= MODAL ================= */
+/* =========================
+   MODAL
+========================= */
 
 .modal {
 
     position: fixed;
 
     inset: 0;
+
+    z-index: 100;
 
     display: none;
 
@@ -867,19 +859,15 @@ body {
 
     padding: 20px;
 
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.75);
 
     backdrop-filter: blur(8px);
-
-    z-index: 2000;
-
 }
 
 
 .modal.show {
 
     display: flex;
-
 }
 
 
@@ -895,12 +883,12 @@ body {
 
     padding: 25px;
 
-    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.5);
 }
 
 
-.modal-header {
+.modal-title {
 
     display: flex;
 
@@ -908,19 +896,17 @@ body {
 
     align-items: center;
 
-    margin-bottom: 20px;
-
+    margin-bottom: 22px;
 }
 
 
-.modal-header h2 {
+.modal-title h2 {
 
     font-size: 20px;
-
 }
 
 
-.close-btn {
+.close {
 
     width: 30px;
 
@@ -928,41 +914,43 @@ body {
 
     border: none;
 
+    border-radius: 7px;
+
     background: rgba(255,255,255,0.05);
 
     color: #aaa;
 
-    border-radius: 7px;
-
     font-size: 20px;
 
     cursor: pointer;
-
 }
 
 
-#editInput {
+#editTaskInput {
 
     width: 100%;
 
     padding: 14px;
 
-    background: rgba(255,255,255,0.04);
+    margin-bottom: 15px;
+
+    border-radius: 9px;
 
     border: 1px solid var(--border);
 
-    border-radius: 9px;
+    background: rgba(255,255,255,0.04);
 
     color: white;
 
     outline: none;
 
-    font-size: 13px;
+    font-family: inherit;
 
+    font-size: 13px;
 }
 
 
-.edit-options {
+.edit-grid {
 
     display: grid;
 
@@ -970,9 +958,6 @@ body {
         repeat(3, 1fr);
 
     gap: 10px;
-
-    margin-top: 15px;
-
 }
 
 
@@ -980,15 +965,15 @@ body {
 
     width: 100%;
 
-    margin-top: 20px;
-
     padding: 14px;
+
+    margin-top: 20px;
 
     border: none;
 
     border-radius: 9px;
 
-    background: var(--red);
+    background: var(--accent);
 
     color: white;
 
@@ -999,11 +984,12 @@ body {
     letter-spacing: 1px;
 
     cursor: pointer;
-
 }
 
 
-/* ================= FOOTER ================= */
+/* =========================
+   FOOTER
+========================= */
 
 footer {
 
@@ -1013,16 +999,24 @@ footer {
 
     padding: 25px 3px;
 
-    color: #4d4f59;
+    color: #4d4f58;
 
     font-size: 8px;
 
     letter-spacing: 2px;
+}
+
+
+footer span:first-child {
+
+    color: var(--accent);
 
 }
 
 
-/* ================= MOBILE ================= */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 650px) {
 
@@ -1037,19 +1031,17 @@ footer {
 
         align-items: flex-start;
 
-        gap: 20px;
-
     }
 
 
     .header h1 {
 
-        font-size: 35px;
+        font-size: 38px;
 
     }
 
 
-    .date-box {
+    .today {
 
         display: none;
 
@@ -1063,78 +1055,77 @@ footer {
     }
 
 
-    .stat-card {
+    .stat {
 
         padding: 14px 10px;
 
     }
 
 
-    .stat-card strong {
+    .stat strong {
 
-        font-size: 20px;
+        font-size: 21px;
 
     }
 
 
-    .add-card,
-    .tasks-card {
+    .card {
 
         padding: 20px;
 
     }
 
 
-    .input-row {
+    .main-input {
 
         flex-direction: column;
 
     }
 
 
-    .add-btn {
+    .main-input button {
 
         padding: 14px;
 
     }
 
 
-    .task-options,
-    .edit-options {
+    .options {
 
         grid-template-columns: 1fr;
 
     }
 
 
-    .tasks-header {
-
-        align-items: flex-start;
+    .task-header {
 
         flex-direction: column;
 
-        gap: 0;
+        align-items: flex-start;
 
-    }
-
-
-    .filters {
-
-        margin-bottom: 12px;
+        gap: 15px;
 
     }
 
 
     .task-item {
 
-        grid-template-columns: 30px 1fr;
+        grid-template-columns:
+            28px 1fr;
 
     }
 
 
-    .task-actions {
+    .actions {
 
         grid-column: 2;
+
+    }
+
+
+    .edit-grid {
+
+        grid-template-columns: 1fr;
 
     }
 
