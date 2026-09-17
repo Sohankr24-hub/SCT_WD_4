@@ -1,1 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow - To-Do App</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+    </div>
+
+
+    <main class="app">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+                <p class="eyebrow">PERSONAL PRODUCTIVITY</p>
+
+                <h1>
+                    Task<span>Flow</span>
+                </h1>
+
+                <p class="subtitle">
+                    Organize your day. Get things done.
+                </p>
+            </div>
+
+            <div class="date-box">
+                <span id="currentDay">TODAY</span>
+                <strong id="currentDate">--</strong>
+            </div>
+
+        </header>
+
+
+        <!-- STATS -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <span>TOTAL</span>
+                <strong id="totalTasks">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>ACTIVE</span>
+                <strong id="activeTasks">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>COMPLETED</span>
+                <strong id="completedTasks">0</strong>
+            </div>
+
+        </section>
+
+
+        <!-- ADD TASK -->
+
+        <section class="add-card">
+
+            <div class="section-title">
+                <span>01</span>
+                <h2>Add New Task</h2>
+            </div>
+
+
+            <form id="taskForm">
+
+                <div class="input-row">
+
+                    <input
+                        type="text"
+                        id="taskInput"
+                        placeholder="What needs to be done?"
+                        maxlength="100"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="add-btn"
+                    >
+                        + ADD TASK
+                    </button>
+
+                </div>
+
+
+                <div class="task-options">
+
+                    <div class="option">
+
+                        <label for="taskDate">
+                            DATE
+                        </label>
+
+                        <input
+                            type="date"
+                            id="taskDate"
+                        >
+
+                    </div>
+
+
+                    <div class="option">
+
+                        <label for="taskTime">
+                            TIME
+                        </label>
+
+                        <input
+                            type="time"
+                            id="taskTime"
+                        >
+
+                    </div>
+
+
+                    <div class="option">
+
+                        <label for="taskPriority">
+                            PRIORITY
+                        </label>
+
+                        <select id="taskPriority">
+
+                            <option value="low">
+                                Low
+                            </option>
+
+                            <option value="medium" selected>
+                                Medium
+                            </option>
+
+                            <option value="high">
+                                High
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- TASK LIST -->
+
+        <section class="tasks-card">
+
+            <div class="tasks-header">
+
+                <div>
+                    <div class="section-title">
+                        <span>02</span>
+                        <h2>My Tasks</h2>
+                    </div>
+
+                    <p id="taskMessage">
+                        Your tasks will appear here.
+                    </p>
+                </div>
+
+
+                <div class="filters">
+
+                    <button
+                        class="filter active"
+                        data-filter="all"
+                    >
+                        ALL
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-filter="active"
+                    >
+                        ACTIVE
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-filter="completed"
+                    >
+                        DONE
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="task-list"
+                id="taskList"
+            >
+
+                <div
+                    class="empty-state"
+                    id="emptyState"
+                >
+
+                    <div class="empty-icon">
+                        ✓
+                    </div>
+
+                    <h3>
+                        No tasks yet
+                    </h3>
+
+                    <p>
+                        Add your first task and start organizing your day.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <span>
+                TASKFLOW
+            </span>
+
+            <span>
+                HTML • CSS • JAVASCRIPT
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <!-- EDIT MODAL -->
+
+    <div
+        class="modal"
+        id="editModal"
+    >
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2>Edit Task</h2>
+
+                <button
+                    id="closeModal"
+                    class="close-btn"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <input
+                type="text"
+                id="editInput"
+                placeholder="Task name"
+            >
+
+
+            <div class="edit-options">
+
+                <div>
+
+                    <label>DATE</label>
+
+                    <input
+                        type="date"
+                        id="editDate"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>TIME</label>
+
+                    <input
+                        type="time"
+                        id="editTime"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>PRIORITY</label>
+
+                    <select id="editPriority">
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="saveEdit"
+                class="save-btn"
+            >
+                SAVE CHANGES
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
